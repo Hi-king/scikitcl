@@ -1,0 +1,6 @@
+#!/bin/bash
+inputcsv=$1
+basename=${inputcsv%.*}
+outputsvm=$basename.svmdat
+
+less $inputcsv|perl -ne 'chomp();@F=split(",", $_);print @F[0]," ";foreach $i(1..$#F){;print $i+1,":",@F[$i]," "}print "\n";'>$outputsvm
