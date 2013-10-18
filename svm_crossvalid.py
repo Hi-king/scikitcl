@@ -11,7 +11,7 @@ output
    |- crossvalid.csv
 =================================
 ogaki@iis.u-tokyo.ac.jp
-2012/12/8 -> 2012/12/12
+2012/12/8 -> 2013/08/21
 =================================
 '''
 
@@ -26,7 +26,7 @@ import subprocess
 ##=======##
 ## const ##
 ##=======##
-SVMEASY = "myeasy_multiclass.py"
+SVMEASY = "svm.py"
 TMPTESTDATA = "tmptest.dat"
 TMPTRAININGDATA = "tmptrain.dat"
 
@@ -46,13 +46,13 @@ if __name__ == '__main__':
 
     K = int(sys.argv[2]) if len(sys.argv)>2 else len(inputlines)
     
-    outputfilename = base+"_k"+str(K)+".csv"
+    outputfilename = base+"_k"+str(K)+"_svm.csv"
 
     ##======##
     ## main ##
     ##======##
     linenum = int(math.ceil(float(len(inputlines))/K))
-    svmoutfile = os.path.splitext(TMPTESTDATA)[0]+".predict"
+    svmoutfile = os.path.splitext(TMPTESTDATA)[0]+"_svm_predict.dat"
 
     labels = []
     predicts = []
@@ -73,8 +73,8 @@ if __name__ == '__main__':
             predicts.append(line.rstrip())
 
     ## remove ##
-    for suffix in ['dat', 'range', 'scale', 'model', 'out']: os.remove(os.path.splitext(TMPTRAININGDATA)[0]+"."+suffix)
-    for suffix in ['dat', 'predict', 'scale']: os.remove(os.path.splitext(TMPTESTDATA)[0]+"."+suffix)
+    #for suffix in ['dat', 'range', 'scale', 'model', 'out']: os.remove(os.path.splitext(TMPTRAININGDATA)[0]+"."+suffix)
+    #for suffix in ['dat', 'predict', 'scale']: os.remove(os.path.splitext(TMPTESTDATA)[0]+"."+suffix)
             
 
     labels = [ line.split(" ")[0] for line in inputlines ]        
