@@ -26,7 +26,7 @@ import subprocess
 ##=======##
 ## const ##
 ##=======##
-SVMEASY = "svm.py"
+SVMEASY = os.path.dirname(__file__)+"/svm.py"
 TMPTESTDATA = "tmptest.dat"
 TMPTRAININGDATA = "tmptrain.dat"
 
