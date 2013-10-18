@@ -2,5 +2,6 @@
 inputcsv=$1
 basename=${inputcsv%.*}
 outputsvm=$basename.svmdat
+delim="\t";if [ $# -gt 2 ];then delim=$2;fi
 
-less $inputcsv|perl -ne 'chomp();@F=split(",", $_);print @F[0]," ";foreach $i(1..$#F){;print $i+1,":",@F[$i]," "}print "\n";'>$outputsvm
+less $inputcsv|tr $delim ","|perl -ne 'chomp();@F=split(",", $_);print @F[0]," ";foreach $i(1..$#F){;print $i,":",@F[$i]," "}print "\n";' >$outputsvm
