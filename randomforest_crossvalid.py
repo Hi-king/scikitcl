@@ -116,7 +116,7 @@ if __name__ == '__main__':
     for line in predicts:
         ofile.write(line+"\n")
 
-   ofile = open(outputprobafilename, "w+")
+    ofile = open(outputprobafilename, "w+")
     for line in probas:
         ofile.write(line+"\n")
 
