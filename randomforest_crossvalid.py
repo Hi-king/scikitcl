@@ -30,7 +30,7 @@ ogaki@iis.u-tokyo.ac.jp
 ''')
 parser.add_argument('svmdata', help='.dat')
 parser.add_argument('-k', help='k fold e.g. 3')
-parser.add_argument('-b', dest='classifier', help='e.g. "randomforest.py --max_features=40 --n_estimators=100"', default='randomforest.py')
+parser.add_argument('-b', dest='classifier', help='e.g. "randomforest.py --max_features=40 --n_estimators=100"', default='randomforest.py -p')
 
 import sys
 import re
@@ -61,6 +61,7 @@ if __name__ == '__main__':
     base,ext = os.path.splitext(inputfilename)
     
     outputfilename = base+"_k"+str(K)+"_rforest.csv"
+    outputprobafilename = base+"_k"+str(K)+"_rforest_probabilities.csv"
     outputimportancefilename = base+"_k"+str(K)+"_rforest_importance.dat"
     
     PREFIX += base
@@ -72,10 +73,12 @@ if __name__ == '__main__':
     ##======##
     linenum = int(math.ceil(float(len(inputlines))/K))
     svmoutfile = os.path.splitext(TMPTESTDATA)[0]+"_rforest_predict_labeled.csv"
+    svmprobafile = os.path.splitext(TMPTESTDATA)[0]+"_rforest_probabilities.csv"
     svmimportancefile = os.path.splitext(TMPTESTDATA)[0]+"_rforest_importance.dat"
 
     labels = []
     predicts = []
+    probas = []
     importances = []
     
     for i in range(0, len(inputlines), linenum):
@@ -92,6 +95,8 @@ if __name__ == '__main__':
 
         for line in open(svmoutfile):
             predicts.append(line.rstrip())
+        for line in open(svmprobafile):
+            probas.append(line.rstrip())
 
         importances.append(scipy.array(map(float, [line.rstrip() for line in open(svmimportancefile) if line[0].isdigit() ])))
 
@@ -109,6 +114,10 @@ if __name__ == '__main__':
 
     ofile = open(outputfilename, "w+")
     for line in predicts:
+        ofile.write(line+"\n")
+
+   ofile = open(outputprobafilename, "w+")
+    for line in probas:
         ofile.write(line+"\n")
 
     ofile = open(outputimportancefilename, "w+")
