@@ -98,7 +98,7 @@ if __name__ == '__main__':
         for line in open(svmprobafile):
             probas.append(line.rstrip())
 
-        importances.append(scipy.array(map(float, [line.rstrip() for line in open(svmimportancefile) if line[0].isdigit() ])))
+        importances.append(scipy.array(map(float, [line.rstrip() for line in open(svmimportancefile) if line[0].isdigit() or line[0]=="-" ])))
 
     ## remove ##
     for suffix in ['dat']: os.remove(os.path.splitext(TMPTRAININGDATA)[0]+"."+suffix)
