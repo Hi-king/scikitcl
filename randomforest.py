@@ -104,11 +104,13 @@ if __name__ == '__main__':
     ##======##
     ## main ##
     ##======##
+    ## train ##
     inputdata, inputlabels = read_libsvmdata(inputfilename) 
-    testdata, testlabels = read_libsvmdata(testsetfilename)
-
     classifier = sklearn.ensemble.RandomForestClassifier(compute_importances = True, n_jobs = -1, **vars(args))
     classifier.fit(inputdata, inputlabels)
+
+    ## test ##
+    testdata, testlabels = read_libsvmdata(testsetfilename)
     predictlabels = map(int, classifier.predict(testdata))
     if flag_proba: probabilities = classifier.predict_proba(testdata)
 
