@@ -18,8 +18,9 @@ def readtsv(filename):
 if __name__=='__main__':
     args = parser.parse_args()
     basename = os.path.splitext(args.input_tsv)[0]
-    output_labels_filename = "%s_meanshift_labels.dat" % (basename)
-    output_centroids_filename = "%s_meanshift_centroids.tsv" % (basename)
+    bandwidth_suffix = "" if args.bandwidth is None else "_%sband" % str(args.bandwidth).replace(".", "p")
+    output_labels_filename = "%s_meanshift%s_labels.dat" % (basename, bandwidth_suffix)
+    output_centroids_filename = "%s_meanshift%s_centroids.tsv" % (basename, bandwidth_suffix)
 
     data = readtsv(args.input_tsv)
 
